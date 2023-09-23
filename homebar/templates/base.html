@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Homebar App</title>
+    <style>input {max-width: 12em};</style>
+    <link rel="stylesheet" href="{% static 'css/homebar.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+    <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <!-- Add a button to toggle the collapsed menu on small screens -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Wrap your menu items in a collapse container -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="app_name"><a class="nav-link" href="{% url 'home' %}"><strong>Homebar App</strong></a></li>
+            <li class="nav_item"><a class="nav-link" href="{% url 'category_list' %}">Spirits</a></li>
+            <li class="nav_item"><a class="nav-link" href="{% url 'cocktailcategory_list' %}">Cocktails</a></li>
+            {% if not user.is_authenticated %}
+                <li class="nav_item"><a class="nav-link" href="{% url 'sign_up' %}">Sign Up</a></li>
+                <li class="nav_item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+            {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'spirit_collection' %}">My Collection</a></li>
+                <li class="nav_item"><p class="navbar-text">Logged in as {{ user.username }}</p></li>
+                <li class="nav_item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+   <div class="content">
+       {% block content %}
+
+       {% endblock content %}
+   </div>
+</body>
+<footer>
+
+</footer>
+</html>

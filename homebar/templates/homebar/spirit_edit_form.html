@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+<br><h2>Edit Spirit</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+    <input type="submit">
+</form><br>
+<button><a href="{% url 'category_list' %}">Back</a></button>
+{% endblock %}

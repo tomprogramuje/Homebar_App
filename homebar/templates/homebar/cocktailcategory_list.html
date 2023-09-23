@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Cocktail Categories</h1>
+    <ul>
+        {% for cocktailcategory in cocktailcategory %}
+            <li><a href="{% url 'cocktailcategory_detail' cocktailcategory.id %}">{{ cocktailcategory.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% if user.is_superuser %}
+<button class="btn btn-primary"><a class="white" href="{% url 'cocktail_form' %}">Create New Cocktail</a></button>
+{% endif %}
+<form method="POST" action="{% url 'cocktail_search' %}">
+  {% csrf_token %}
+  <input type="search" placeholder="Search for a cocktail..." name="searched">
+  <button class="btn btn-secondary" type="submit">Search</button>
+</form>
+  <br><br><h2>Recently Added Cocktails</h2>
+  <ul class="light-group">
+    {% for cocktail in cocktail_list %}
+        <li class="list-group-item"><a href="{% url 'cocktail_detail' cocktail.id %}">{{ cocktail.name }}</a></li>
+    {% empty %}
+      <li>No cocktails entered yet!</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

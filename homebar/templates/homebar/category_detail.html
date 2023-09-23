@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ category.name }}</h2>
+<ul>
+    {% for spirit in spirits_in_category %}
+        <li class="list-group-item"><a href="{% url 'spirit_detail' spirit.id %}">{{ spirit.name }}</a></li>
+    {% empty %}
+        <li>No spirits in this category yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

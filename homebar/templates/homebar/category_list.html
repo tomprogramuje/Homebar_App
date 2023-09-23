@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Spirit Categories</h1>
+    <ul>
+        {% for category in category %}
+            <li><a href="{% url 'category_detail' category.id %}">{{ category.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% if user.is_superuser %}
+<button class="btn btn-primary"><a class="white" href="{% url 'spirit_form' %}">Create New Spirit</a></button>
+{% endif %}
+<form method="POST" action="{% url 'spirit_search' %}">
+  {% csrf_token %}
+  <input type="search" placeholder="Search for a spirit..." name="searched">
+  <button class="btn btn-secondary" type="submit">Search</button>
+</form>
+  <br><br><h2>Recently Added Spirits</h2>
+  <ul class="light-group">
+    {% for spirit in spirit_list %}
+        <li class="list-group-item"><a href="{% url 'spirit_detail' spirit.id %}">{{ spirit.name }}</a></li>
+    {% empty %}
+      <li>No spirits entered yet!</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

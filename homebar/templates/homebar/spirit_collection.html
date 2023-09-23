@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Your Spirit Collection</h1>
+    <ul>
+        {% for item in collection %}
+            <li>
+                {{ item.spirit.name }}
+                <form method="post" action="{% url 'remove_from_collection' item.spirit.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-danger" type="submit">Remove from collection</button>
+                </form>
+            </li>
+    </ul>
+        {% empty %}
+        <p>You have no spirits in your collection yet.</p>
+        {% endfor %}
+<h2>Cocktail suggestions</h2>
+    {% if suggested_cocktail %}
+        <p>Since you have {{ suggested_cocktail.base }} {{ suggested_cocktail.base.base_spirit }} in your collection, we suggest you try: {{ suggested_cocktail.name }}</p>
+        <p>Ingredients: {{ suggested_cocktail.base }}, {{ suggested_cocktail.ingredients }}</p>
+    {% else %}
+        <p>No suggested cocktails at the moment.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if searched %}
+        <h2>You Searched For {{ searched }}</h2>
+        <br>
+        {% for cocktail in cocktails %}
+            <a href="{% url 'cocktail_detail' cocktail.id %}">{{ cocktail }}</a><br>
+        {% endfor %}
+    {% else %}
+        <h2>You haven't specify what you're searching for!</h2>
+    {% endif %}
+<button><a href="{% url 'cocktail_list' %}">Back</a></button>
+{% endblock %}

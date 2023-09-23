@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Spirit Price Details</h2>
+    <h3>{{ spirit.name }}</h3>
+    <p>Price: ${{ price }}</p>
+    <p><a href="{{ spirit.url }}" target="_blank">Buy it here</a></p>
+{% endblock %}

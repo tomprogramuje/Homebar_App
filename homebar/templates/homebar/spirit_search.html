@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if searched %}
+        <h2>You Searched For {{ searched }}</h2>
+        <br>
+        {% for spirit in spirits %}
+            <a href="{% url 'spirit_detail' spirit.id %}">{{ spirit }}</a><br>
+        {% endfor %}
+    {% else %}
+        <h2>You haven't specify what you're searching for!</h2>
+    {% endif %}
+<button><a href="{% url 'spirit_list' %}">Back</a></button>
+{% endblock %}

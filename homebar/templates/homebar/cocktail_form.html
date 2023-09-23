@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+<br><h2>Create New Cocktail</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+    <input type="submit">
+</form><br>
+<button class="btn btn-secondary btn-sm"><a class="white" href="{% url 'cocktailcategory_list' %}">Back</a></button>
+{% endblock %}

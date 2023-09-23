@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load ratings %}
+{% block content %}
+    <h2>Cocktail Details</h2><br>
+    <h3>{{ cocktail.name }}</h3><br>
+    {% if cocktail.base.name == 'Vodka' %}
+    <h4>Base: {{ cocktail.base }}</h4>
+    {% else %}
+    <h4>Base: {{ cocktail.base }} {{cocktail.base.base_spirit }}</h4>
+    {% endif %}
+    <h5>Additional Ingredients: {{ cocktail.ingredients }}</h5>
+    {% if user.is_superuser %}<h6>Added {{ cocktail.pub_date }}</h6>{% endif %}
+    <p>{{ cocktail.recipe }}</p>
+ <div class="star-ratings">
+        {% ratings cocktail %}
+ </div>
+{% if user.is_authenticated %}
+    {% if cocktail.base_id in spirit_in_user_collection %}
+<p><strong>Since you have {{ cocktail.base }} {{ cocktail.base.base_spirit }} in your collection, you can try this cocktail right away!</strong></p>
+    {% else %}
+        {% if cocktail.base.name == cocktail.base.base_spirit.name %}
+            <p><strong>Sadly, you are missing {{ cocktail.base }} in your collection to try this one out!</strong></p>
+        {% else %}
+            <p><strong>Sadly, you are missing {{ cocktail.base }} {{ cocktail.base.base_spirit }} in your collection to try this one out!</strong></p>
+        {% endif %}
+    {% endif %}
+{% endif %}
+    <br><br>
+    <button type="button" class="btn btn-secondary btn-sm"><a class="white" href="{% url 'cocktailcategory_detail' cocktail_category.id %}">Back</a></button>
+    {% if user.is_superuser %}
+    <button type="button" class="btn btn-warning btn-sm"><a class="white" href="{% url 'cocktail_edit' cocktail.id %}">Edit</a></button>
+    <button type="button" class="btn btn-danger btn-sm"><a class="white" href="{% url 'cocktail_delete' cocktail.id %}">Delete</a></button>
+    {% endif %}
+    <h4>{{ cocktail.rating }}</h4><br>
+    <h2>Comments</h2>
+    {% for comment in cocktailcomment %}
+    <div class="card mt-2">
+        <div class="card-header"><strong>{{ comment.comment.author.username }}&ensp;{{ comment.comment.created_at }}</strong></div>
+        <div class="card-body d-flex flex-row justify-content-between">
+             <div>
+                 <p>{{ comment.comment.text }}</p>
+             </div>
+             <div>
+                 {% if user.is_superuser or comment.comment.author.username == request.user.username %}
+                 <form method="POST" action="{% url 'cocktail_comment_delete' cocktail.id comment.id %}">
+                     {% csrf_token %}
+                     <button type="submit" class="btn btn-danger">Delete Comment</button>
+                 </form>
+                 {% endif %}
+             </div>
+        </div>
+    </div><br>
+    {% empty %}
+    <p>No comments yet.</p>
+    {% endfor %}
+    {% if user.is_authenticated %}
+    <form method="POST" action="{% url 'cocktail_comment_create' cocktail.id %}">
+        {% csrf_token %}
+        <input placeholder="Leave a comment..." name="commented">
+        <button class="btn btn-primary" type="submit">Comment</button>
+    </form>
+    {% endif %}
+{% endblock %}
