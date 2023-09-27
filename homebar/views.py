@@ -86,12 +86,16 @@ class CocktailDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = self.request.user
         cocktail = context['cocktail']
         comments = CocktailComment.objects.filter(cocktail=cocktail)
-        spirit_in_user_collection = UserCollection.objects.filter(user=user).values_list('spirit__subcategory', flat=True)
-        context['cocktail_category'] = self.object.cocktail_category
 
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            spirit_in_user_collection = UserCollection.objects.filter(user=user).values_list('spirit__subcategory', flat=True)
+        else:
+            spirit_in_user_collection = []
+
+        context['cocktail_category'] = self.object.cocktail_category
         context['cocktailcomment'] = comments
         context['spirit_in_user_collection'] = spirit_in_user_collection
         return context
