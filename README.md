@@ -1,5 +1,5 @@
 # homebar_app
-Homebar App
+
 The app for now can do:
 - CRUD Spirits and Cocktails
 - view list of all Spirits and Cocktails based on their category and subcategories
