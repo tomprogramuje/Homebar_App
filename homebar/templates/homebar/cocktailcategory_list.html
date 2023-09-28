@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
     <h1>Cocktail Categories</h1>
-    <ul>
+    <ul class="light-group">
         {% for cocktailcategory in cocktailcategory %}
-            <li><a href="{% url 'cocktailcategory_detail' cocktailcategory.id %}">{{ cocktailcategory.name }}</a></li>
+            <li class="list-group-item"><a href="{% url 'cocktailcategory_detail' cocktailcategory.id %}">{{ cocktailcategory.name }}</a></li>
         {% endfor %}
     </ul>
 {% if user.is_superuser %}

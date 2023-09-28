@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
     <h1>Spirit Categories</h1>
-    <ul>
+    <ul class="light-group">
         {% for category in category %}
-            <li><a href="{% url 'category_detail' category.id %}">{{ category.name }}</a></li>
+            <li class="list-group-item"><a href="{% url 'category_detail' category.id %}">{{ category.name }}</a></li>
         {% endfor %}
     </ul>
 {% if user.is_superuser %}
