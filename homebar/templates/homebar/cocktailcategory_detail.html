@@ -6,7 +6,7 @@
     {% for cocktail in cocktails_in_category %}
         <li class="list-group-item"><a href="{% url 'cocktail_detail' cocktail.id %}">{{ cocktail.name }}</a></li>
     {% empty %}
-        <li>No cocktails in this category yet.</li>
+        <li class="list-group-item">No cocktails in this category yet.</li>
     {% endfor %}
 </ul>
 {% endblock %}
