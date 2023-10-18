@@ -26,6 +26,7 @@ urlpatterns = [
     path("cocktail_category/<int:cocktailcategory_id>/", views.cocktail_category_detail, name='cocktailcategory_detail'),
     path("add_to_collection/<int:spirit_id>/", views.add_to_collection, name="add_to_collection"),
     path("remove_from_collection/<int:spirit_id>/", views.remove_from_collection, name="remove_from_collection"),
+    path("remove_from_collection_in_spirit_detail/<int:spirit_id>/", views.remove_from_collection, name="remove_from_collection_in_spirit_detail"),
     path("spirit_collection/", views.view_collection, name="spirit_collection"),
     path("sign_up/", views.sign_up, name="sign_up"),
     path('ratings/', include('star_ratings.urls', namespace='ratings')),

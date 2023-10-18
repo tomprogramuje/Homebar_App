@@ -191,8 +191,22 @@ def remove_from_collection(request, spirit_id):
             collection_entry.delete()
         except UserCollection.DoesNotExist:
             messages.info(request, "You don't have this spirit in your collection!")
+    spirit_detail_url = reverse('spirit_detail', args=[spirit_id])
+    return redirect(spirit_detail_url)
+
+
+@login_required(login_url="/login")
+def remove_from_collection_in_spirit_detail(request, spirit_id):
+    if request.method == "POST":
+        spirit = Spirit.objects.get(id=spirit_id)
+        user = request.user
+        try:
+            collection_entry = UserCollection.objects.get(user=user, spirit=spirit)
+            collection_entry.delete()
+        except UserCollection.DoesNotExist:
+            messages.info(request, "You don't have this spirit in your collection!")
     collection = UserCollection.objects.filter(user=request.user)
-    return render(request, "homebar/spirit_collection.html", {"collection": collection})
+    return render(request, "homebar/spirit_detail.html", {"spirit": spirit})
 
 
 @login_required(login_url="/login")
