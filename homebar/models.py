@@ -51,7 +51,9 @@ class Subcategory(models.Model):
 
 class Spirit(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, null=True)
+    subcategory = models.ForeignKey(
+        Subcategory, on_delete=models.CASCADE, null=True
+    )
     name = models.CharField(max_length=30)
     price = models.IntegerField(blank=True, null=True)
     url = models.URLField(max_length=200, blank=True, null=True)
@@ -68,7 +70,7 @@ class Spirit(models.Model):
                 tag = doc.find("title")
                 price_text = tag.string
 
-                match = re.search(r'\bod\b', price_text)
+                match = re.search(r"\bod\b", price_text)
 
                 if match:
                     start_index = match.end()
@@ -76,7 +78,7 @@ class Spirit(models.Model):
 
                     if end_index >= 0:
                         self.price = price_text[start_index:end_index].strip()
-            except Exception as e:
+            except Exception:
                 pass
 
 
@@ -93,7 +95,9 @@ class CocktailCategory(models.Model):
 
 class Cocktail(models.Model):
     name = models.CharField(max_length=25)
-    cocktail_category = models.ForeignKey(CocktailCategory, on_delete=models.CASCADE)
+    cocktail_category = models.ForeignKey(
+        CocktailCategory, on_delete=models.CASCADE
+    )
     pub_date = models.DateTimeField("date published")
     base = models.ForeignKey(Subcategory, on_delete=models.CASCADE)
     ingredients = models.TextField(max_length=300)
